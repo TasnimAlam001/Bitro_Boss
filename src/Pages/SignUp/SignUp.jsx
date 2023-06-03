@@ -13,27 +13,39 @@ const SignUp = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = data => {
-
-        console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        console.log('user profile info updated');
-                        reset();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Successfully Signed up',
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInDown'
+                        const saveUser = {name: data.name, email: data.email}
+                        fetch('http://localhost:5000/users',{
+                            method: 'POST',
+                            headers:{
+                                'content-type': 'application/json'
                             },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutUp'
-                            }
-                        });
-                        navigate('/');
+                            body: JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Successfully Signed up',
+                                        showClass: {
+                                            popup: 'animate__animated animate__fadeInDown'
+                                        },
+                                        hideClass: {
+                                            popup: 'animate__animated animate__fadeOutUp'
+                                        }
+                                    });
+                                    navigate('/');
+                                }
+                            })
+
+
                     })
                     .then(error => {
                         console.log(error);
@@ -65,7 +77,7 @@ const SignUp = () => {
                                 <label className="label">
                                     <span className="label-text">PhotoURL</span>
                                 </label>
-                                <input type="text" placeholder="PhotoURL"  {...register("photoURL", { required: true, maxLength: 14 })} className="input input-bordered" />
+                                <input type="text" placeholder="PhotoURL"  {...register("photoURL", { required: true })} className="input input-bordered" />
                                 {errors.photoURL && <span className="text-red-600">This field is required</span>}
                             </div>
                             <div className="form-control">

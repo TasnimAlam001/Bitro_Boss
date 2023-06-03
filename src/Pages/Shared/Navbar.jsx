@@ -1,15 +1,19 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
 
-    const {user,LogOut}=useContext(AuthContext);
-    const handleLogOut =()=>{
+    const { user, LogOut } = useContext(AuthContext);
+    const [cart] = useCart();
+
+
+    const handleLogOut = () => {
         LogOut()
-        .then(()=>{ })
-        .then(error=> console.log(error))
+            .then(() => { })
+            .then(error => console.log(error))
     }
 
     const options =
@@ -18,10 +22,10 @@ const Navbar = () => {
             <li><Link to="/menu">Our Menu</Link></li>
             <li><Link to="/order/salad">Order</Link></li>
             <li><Link to="/secret">secret</Link></li>
-            
+
             {
-                user ? <> <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button></>: 
-                <> <li><Link to="/login">Login</Link></li></>
+                user ? <> <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button></> :
+                    <> <li><Link to="/login">Login</Link></li></>
             }
 
         </>
@@ -46,7 +50,20 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Get started</a>
+                <span className="text-2xl pr-3">
+                {
+                    user && <p className="">{user.displayName}</p>
+                }
+                </span>
+                <Link to="/dashboard/mycart">
+                    <span className="flex ">
+
+                        <span className="text-2xl"><FaShoppingCart></FaShoppingCart></span>
+                        <div className="badge badge-secondary">+{cart?.length || 0}</div>
+
+                    </span>
+                    
+                </Link>
             </div>
         </div>
     );

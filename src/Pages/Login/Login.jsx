@@ -43,6 +43,10 @@ const Login = () => {
                 });
                 navigate(from, { replace: true });
             })
+            .then(error => {
+                console.log(error.message)
+                alert(error.message);
+            })
     }
     const handleValidateCaptcha = (e) => {
         const value = e.target.value;
@@ -92,13 +96,14 @@ const Login = () => {
                                     <LoadCanvasTemplate />
                                 </label>
 
-                                <input onBlur={handleValidateCaptcha} type="text" placeholder="Type the text above" name='captcha' className="input input-bordered" required />
+                                <input onBlur={handleValidateCaptcha} type="text" placeholder="Type the text above" name='captcha' className="input input-bordered" />
 
 
                             </div>
+                            {/* todo: make disabled */}
                             <div className="form-control mt-6">
 
-                                <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                                <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                             <p><small>New Here ? <Link to="/signUp">SignUp</Link></small></p>
                         </div>
