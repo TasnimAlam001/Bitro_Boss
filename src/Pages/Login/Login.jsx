@@ -5,6 +5,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
 
@@ -21,6 +22,7 @@ const Login = () => {
         loadCaptchaEnginge(6);
     }, [])
 
+   
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
@@ -106,6 +108,7 @@ const Login = () => {
                                 <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                             <p><small>New Here ? <Link to="/signUp">SignUp</Link></small></p>
+                            <SocialLogin></SocialLogin>
                         </div>
                     </div>
 

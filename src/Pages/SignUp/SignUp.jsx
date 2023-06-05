@@ -1,15 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import signUpImg from '../../assets/others/authentication2.png'
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
 
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = data => {
@@ -41,7 +44,7 @@ const SignUp = () => {
                                             popup: 'animate__animated animate__fadeOutUp'
                                         }
                                     });
-                                    navigate('/');
+                                    navigate(from, { replace: true });
                                 }
                             })
 
@@ -108,6 +111,7 @@ const SignUp = () => {
                                 <input className="btn btn-primary" type="submit" value="SignUp" />
                             </div>
                             <p><small>Already Have an account? <Link to="/login">LogIn</Link></small></p>
+                            <SocialLogin></SocialLogin>
                         </div>
                     </div>
 
