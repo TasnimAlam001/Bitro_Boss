@@ -17,6 +17,7 @@ import useMenu from '../../Hooks/useMenu';
 const Menu = () => {
 
     const [data] = useMenu();
+   
     
     const offered = data.filter(items=> items.category === "offered");
     console.log(offered)

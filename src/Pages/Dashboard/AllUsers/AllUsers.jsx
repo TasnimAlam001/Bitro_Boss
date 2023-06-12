@@ -67,7 +67,7 @@ const AllUsers = () => {
                         <tbody>
                             {
                                 users.map((user, index) => <tr key={user._id} className="hover">
-                                    <th>{index}</th>
+                                    <th>{index+1}</th>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td><button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost text-1xl bg-orange-400 text-white">
